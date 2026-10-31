@@ -22,7 +22,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 
 
-public class CaveVineDecorationProcessor extends StructureProcessor {
+public class CaveVineDecorationProcessor implements StructureProcessor {
     public static final CaveVineDecorationProcessor INSTANCE = new CaveVineDecorationProcessor();
     public static final MapCodec<CaveVineDecorationProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -36,10 +36,10 @@ public class CaveVineDecorationProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             BlockPos blockPosLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state().is(Blocks.GREEN_STAINED_GLASS)) {
+        if (blockInfoGlobal.state().is(Blocks.STAINED_GLASS.green())) {
             RandomSource randomSource = structurePlacementData.getRandom(blockInfoGlobal.pos());
             BlockState blockState = randomizer.get(randomSource);
 
@@ -56,7 +56,8 @@ public class CaveVineDecorationProcessor extends StructureProcessor {
         return blockInfoGlobal;
     }
 
-    protected StructureProcessorType<?> getType() {
+    @Override
+    public MapCodec<? extends StructureProcessor> codec() {
         return StructureProcessorTypeModule.CAVE_VINE_DECORATION_PROCESSOR;
     }
 }

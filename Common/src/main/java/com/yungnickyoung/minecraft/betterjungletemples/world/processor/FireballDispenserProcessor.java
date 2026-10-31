@@ -21,7 +21,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 
 
-public class FireballDispenserProcessor extends StructureProcessor {
+public class FireballDispenserProcessor implements StructureProcessor {
     public static final FireballDispenserProcessor INSTANCE = new FireballDispenserProcessor();
     public static final MapCodec<FireballDispenserProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -29,10 +29,10 @@ public class FireballDispenserProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             BlockPos blockPosLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state().is(Blocks.ORANGE_CONCRETE)) {
+        if (blockInfoGlobal.state().is(Blocks.CONCRETE.orange())) {
             BlockState blockState = Blocks.DISPENSER.defaultBlockState().setValue(DispenserBlock.FACING, Direction.UP);
             CompoundTag newNbt = new CompoundTag();
             ListTag items = new ListTag();
@@ -53,7 +53,8 @@ public class FireballDispenserProcessor extends StructureProcessor {
         return blockInfoGlobal;
     }
 
-    protected StructureProcessorType<?> getType() {
+    @Override
+    public MapCodec<? extends StructureProcessor> codec() {
         return StructureProcessorTypeModule.FIREBALL_DISPENSER_PROCESSOR;
     }
 }

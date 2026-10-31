@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 
 
-public class TorchProcessor extends StructureProcessor {
+public class TorchProcessor implements StructureProcessor {
     public static final TorchProcessor INSTANCE = new TorchProcessor();
     public static final MapCodec<TorchProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -24,7 +24,7 @@ public class TorchProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             BlockPos blockPosLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().is(Blocks.WALL_TORCH) || blockInfoGlobal.state().is(Blocks.TORCH)) {
@@ -36,7 +36,8 @@ public class TorchProcessor extends StructureProcessor {
         return blockInfoGlobal;
     }
 
-    protected StructureProcessorType<?> getType() {
+    @Override
+    public MapCodec<? extends StructureProcessor> codec() {
         return StructureProcessorTypeModule.TORCH_PROCESSOR;
     }
 }

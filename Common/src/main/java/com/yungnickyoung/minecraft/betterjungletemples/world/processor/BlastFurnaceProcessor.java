@@ -20,7 +20,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 
 
-public class BlastFurnaceProcessor extends StructureProcessor {
+public class BlastFurnaceProcessor implements StructureProcessor {
     public static final BlastFurnaceProcessor INSTANCE = new BlastFurnaceProcessor();
     public static final MapCodec<BlastFurnaceProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -32,7 +32,7 @@ public class BlastFurnaceProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             BlockPos blockPosLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().is(Blocks.BLAST_FURNACE)) {
@@ -44,7 +44,8 @@ public class BlastFurnaceProcessor extends StructureProcessor {
         return blockInfoGlobal;
     }
 
-    protected StructureProcessorType<?> getType() {
+    @Override
+    public MapCodec<? extends StructureProcessor> codec() {
         return StructureProcessorTypeModule.BLAST_FURNACE_PROCESSOR;
     }
 }

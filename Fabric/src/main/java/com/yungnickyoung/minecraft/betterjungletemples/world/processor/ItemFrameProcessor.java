@@ -41,7 +41,8 @@ public class ItemFrameProcessor extends StructureEntityProcessor {
         return blockInfoGlobal;
     }
 
-    @Override protected StructureProcessorType<?> getType() {
+    @Override
+    public MapCodec<? extends StructureProcessor> codec() {
         return StructureProcessorTypeModule.ITEM_FRAME_PROCESSOR;
     }
 }
